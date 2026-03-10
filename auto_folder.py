@@ -1,13 +1,13 @@
 import os
 from datetime import datetime
-import ctypes  # Para criar um alerta visual simples se desejar
+import ctypes # pop-up
 import dotenv
 
 def organizar_dia():
     # onde a pasta está. 
-    diretorio_base = os.getenv("diretorio_base")
+    diretorio_base = dotenv.get_key(dotenv.find_dotenv(), "diretorio_base")
     
-    # 2. tem a data de hoje.
+    # Obtém a data atual formatada (ex: 10.03)
     hoje = datetime.now().strftime("%d.%m")
     caminho_completo = os.path.join(diretorio_base, hoje)
 
@@ -15,9 +15,9 @@ def organizar_dia():
         try:
             os.makedirs(caminho_completo)
             # pop-up
-            ctypes.windll.user32.MessageBoxW(0, f"Pasta {hoje} criada com sucesso!", 64)
+            ctypes.windll.user32.MessageBoxW(0, f"Pasta {hoje} criada com sucesso!", "Automatizado", 64)
         except Exception as e:
-            ctypes.windll.user32.MessageBoxW(0, f"Erro ao criar pasta: {e}", 16)
+            ctypes.windll.user32.MessageBoxW(0, f"Erro ao criar pasta: {e}", "Erro", 16)
     
     # O script encerra sozinho após a verificação/criação
 
